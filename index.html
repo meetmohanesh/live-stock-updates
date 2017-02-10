@@ -1,0 +1,28 @@
+<html>
+  <title>
+  </title>
+  <script src = "https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <body>
+    <input/>
+    <button>Search</button>
+    <script>
+      $('button').on('click', () =>{
+        generateResp($('input').val());
+      });
+      function generateResp(val){
+        var promise = $.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22https%3A%2F%2Ffinance.google.com%2Ffinance%2Finfo%3Fclient%3Dig%26q%3DNSE%3A"+val+"%22&format=json&diagnostics=true&callback=l", {
+         format: "JSON"
+        });
+        promise.done(function (data) {
+          let stringData = data.substring(6, data.length-2);
+          let data1 = JSON.parse(stringData).query.results.body;
+           generateTable(JSON.parse(data1.substring(5, data1.length-2)));
+        });
+      }
+      function generateTable(data){
+        //console.info(data);
+      }
+
+    </script>
+  </body>
+</html>
